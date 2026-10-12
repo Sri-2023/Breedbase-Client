@@ -31,6 +31,8 @@ latex = false
 auto_tag_thread = true
 
 # Allow users to edit their own messages
+# an edit removed later turns from the screen but not from the model's
+# history, so text a reader edited out kept being sent with every turn 
 edit_message = true
 
 # Authorize users to spontaneously upload files with messages
@@ -45,17 +47,26 @@ edit_message = true
     # 3. For specific file extensions:
     #    accept = { "application/octet-stream" = [".xyz", ".pdb"] }
     # Note: Using "*/*" is not recommended as it may cause browser warnings
-    accept = ["*/*"]
+    # Spreadsheets only: the formats Breedbase accepts for trial uploads (see bin/upload/reader.py)
+    # this below file extensions are commonly used in the Breedbase user file upload
+    #[features.spontaneous_file_upload]
+    accept = { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = [".xlsx"], 
+                "application/vnd.ms-excel" = [".xls"], "application/vnd.oasis.opendocument.spreadsheet" = [".ods"], 
+                "text/csv" = [".csv"], 
+                "text/tab-separated-values" = [".tsv"], 
+                "text/plain" = [".txt", ".ssv"] 
+            }
     max_files = 1
-    max_size_mb = 500
+    max_size_mb = 20
 
 [features.audio]
     # Sample rate of the audio
     sample_rate = 24000
 
+#these MCP features needs to be discussed before we add them
 [features.mcp]
     # Enable Model Context Protocol (MCP) features
-    #enabled = false
+    # enabled = false
 
 [features.mcp.sse]
     #enabled = true
@@ -72,13 +83,13 @@ edit_message = true
 
 [UI]
 # Name of the assistant.
-name = "Chat with BrAPI-compatible Breedbase Databases"
+name = "Breedbase ChatBot"
+
+# Always English, whatever the browser's language: the login labels, the start page and the disclaimer (watermark) are
+# written in .chainlit/translations/en-US.json. Without this, a German or French browser gets Chainlit's own texts.
+language = "en-US"
 
 # default_theme = "dark"
-
-# Force a specific language for all users (e.g., "en-US", "he-IL", "fr-FR")
-# If not set, the browser's language will be used
-language = "en-US"
 
 # layout = "wide"
 
@@ -92,12 +103,12 @@ cot = "hidden"
 # The CSS file can be served from the public directory or via an external link.
 # custom_css = "/public/test.css"
 
-# Specify additional attributes for a custom CSS file
-# custom_css_attributes = "media=\"print\""
 
 # Specify a JavaScript file that can be used to customize the user interface.
 # The JavaScript file can be served from the public directory.
-# custom_js = "/public/custom.js"
+# Guest access on the login page and the guest-limit login flow (see public/login.js)
+custom_js = "/public/login.js"
+
 
 # Custom login page image, relative to public directory or external URL
 # login_page_image = "/public/custom-background.jpg"
@@ -110,6 +121,7 @@ cot = "hidden"
 # Be careful: If this is a relative path, it should not start with a slash.
 # custom_build = "./public/build"
 
+# the below things from here can be removed
 # Custom login page image filter (Tailwind internal filters, no dark/light variants)
 # login_page_image_filter = "brightness-50 grayscale"
 # login_page_image_dark_filter = "contrast-200 blur-sm"
@@ -130,14 +142,6 @@ cot = "hidden"
 # This can be used to customize the frontend code.
 # Be careful: If this is a relative path, it should not start with a slash.
 # custom_build = "./public/build"
-
-# Specify optional one or more custom links in the header.
-# [[UI.header_links]]
-#     name = "Issues"
-#     display_name = "Report Issue"
-#     icon_url = "https://avatars.githubusercontent.com/u/128686189?s=200&v=4"
-#     url = "https://github.com/Chainlit/chainlit/issues"
-#     target = "_blank" (default)  # Optional: "_self", "_parent", "_top".
 
 [meta]
 generated_by = "2.11.1"
