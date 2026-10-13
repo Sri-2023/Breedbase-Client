@@ -1,6 +1,6 @@
-# BrAPI Breedbase chatbot ! (tentative name)
+# Breedbase chatbot ! (tentative name)
 
-Welcome to the BrAPI enabled Breedbase chatbot, an easy way to explore the breeding data from Breedbase Databases just by asking questions in plain english. This chabot is specialized chatbot designed to provide fast and reliable answers about phenotypic, genotypic, images and any other breeding data directly from the databases. Whether you are a student, researcher, or just curious about the plant breeding and biology this chatbot can help you find the information you need 
+Welcome to the Breedbase chatbot, an easy way to explore the breeding data from Breedbase databases just by asking questions in plain english. Whether you are a student, researcher, or just curious about the plant biology and breeding this chatbot can help you find the information you need 
 
 ## Introduction
 
@@ -10,14 +10,15 @@ Welcome to the BrAPI enabled Breedbase chatbot, an easy way to explore the breed
 ## Features
 
 With this chatbot, you can:
-- **Explore breeding Data:** Ask about trials, crosses, acessions, progenies and many others and get responses in real-time
-- **Explore phenotpyic and genotyping Data:** Ask about genotyping trials, SNP's and markers dataset
-- **Prepare file to upload:** convert the raw Excel files into format breedbase accepts, inlcuding single, multiple-trial upload, accessions upload and many others (prep)
+- **Explore phenotype Data:** Ask about trials, traits, crosses, acessions, progenies and many others and get responses in real-time
+- **Explore genotype Data:** Ask about genotyping trials, SNP's and markers dataset
+- **Prepare file to upload:** Ask about converting your raw dataset into a Breedbase acceptable format inlcuding single, multiple-trial upload, accessions upload and many others
 
 ## How to use
 
-- Choose the crop database you want to explore (Ex: cassavabase or yambase) from the top-left corner of the interface
-- Simple type your question into the chat window in plain english. 
+- Choose the Database: Select the database you want to access from the main page.
+- Select your login status: Choose either guest access or log in. Logging in saves your conversation history for XY days (days to be decises based on memeory allocation) from your last chat.
+- Then, simply type your question into the chat window in plain English.
 
 Feel free to explore any topic in the selected database. Whether your question is broad or very specific, the chatbot will do its best to give you an accurate and helpful answer.
 
