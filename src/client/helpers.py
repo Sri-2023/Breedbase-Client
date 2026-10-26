@@ -38,11 +38,17 @@ def fetch_paginated(
   params['pageSize'] = pagesize
 
   total_count = 0
+  status_messages =[]
 
   while max_pages is None or page < max_pages:
     params['page'] = page
 
     response = client._get(endpoint, params=params)
+    status =((response or  {}).get ('metadata') or {}).get('status') or []
+    for s in status:
+      if s.get('messageType') in ('ERROR', 'WARNING'):
+        status_messages.append(s)
+
 
     if not response or 'result' not in response:
       break
@@ -76,6 +82,7 @@ def fetch_paginated(
     'returnedCount': len(all_data),
     'pagesFetched': page + 1,
     'timestamp': datetime.now().isoformat(),
+    'statusMessages': status_messages,
   }
 
   if as_dataframe:
