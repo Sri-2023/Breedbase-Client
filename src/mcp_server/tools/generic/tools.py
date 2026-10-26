@@ -223,7 +223,7 @@ def register_generic_tools(
               "returned_count": len(df),
               "columns": list(df.columns),
               "column_count": len(df.columns),
-              "truncated": metadata.get('totalCount', 0) > max_results
+              "truncated": len(df) < metadata.get('totalCount', len(df))
           },
           "access": {
               "resource": f"brapi://results/{active_session_id}/{result_id}",
