@@ -1,5 +1,4 @@
-from client.capabilities.capability_builder import ServerCapabilities
-
+from client.capabilities.type import ServerCapabilities
 
 def check_endpoint_exists(capabilities: ServerCapabilities, service: str) -> bool:
   """Check if a service endpoint exists in capabilities"""
