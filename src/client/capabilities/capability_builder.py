@@ -1,8 +1,10 @@
+import sys
 import pandas as pd
 
 from client.capabilities.type import ServerCapabilities, ModuleCapability, EndpointCapability
 from client.client import BrapiClient
 from pathlib import Path
+
 
 class CapabilityBuilder:
   @classmethod
@@ -10,8 +12,22 @@ class CapabilityBuilder:
     serverinfo = client.fetch_serverinfo()
     result = serverinfo.get('result', {})
     calls = result.get('calls', []) or []
-    
+
     metadata = pd.read_csv(Path(__file__).parent.parent / 'data' / 'metadata.csv')
+
+    if not calls:
+      # some breedbase instances (yambase, cassbase, musabase) refuses /serverinfo (Ex: https://yambase.org/brapi/v2/serverinfo)
+      # without a login, and a server that is down answers nothing.
+      # An empty list would make every tool refuse every request, even for logged-in users.
+      # As we have all services in metadata.csv instead;
+      # the database still decides per request (with each user's own login).
+      sys.stderr.write(f'No service list from {server_name} /serverinfo; assuming all services in metadata.csv\n')
+      calls = []
+      for s in metadata['service']:
+        if s.startswith('search/') and '{' not in s:
+          calls.append({'service': s, 'methods': ['POST']})
+        else:
+          calls.append({'service': s, 'methods': ['GET']})
 
     caps = ServerCapabilities(server_name=server_name)
 
@@ -30,9 +46,9 @@ class CapabilityBuilder:
       # Prefer category from metadata
       row = metadata.loc[metadata['service'] == path]
       if not row.empty:
-          category = row.iloc[0]['category']
+        category = row.iloc[0]['category']
       else:
-          category = None
+        category = None
 
       if category:
         module = category.lower()
@@ -49,7 +65,7 @@ class CapabilityBuilder:
         data_types=data_types,
         module=module,
         description=row.iloc[0]['description'],
-        input_schema=row.iloc[0]['dictionary_loc']
+        input_schema=row.iloc[0]['dictionary_loc'],
       )
 
       # register endpoint
