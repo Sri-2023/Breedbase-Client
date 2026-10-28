@@ -37,6 +37,7 @@ packages = ["."]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 
+# here is the Astral-Docs for the Ruff - https://docs.astral.sh/ruff/settings/#indent-width
 [tool.ruff]
 line-length = 120
 indent-width = 2
